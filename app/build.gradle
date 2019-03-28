@@ -1,14 +1,44 @@
 apply plugin: 'com.android.application'
 
+def getVersionPropertiesValue(def varName) {
+    def propertiesFile = file('version.properties')
+
+    if (!propertiesFile.canRead()) {
+        throw new FileNotFoundException("Could not read " + propertiesFile.name)
+    }
+
+    Properties properties = new Properties()
+    properties.load(new FileInputStream(propertiesFile))
+
+    def propertyValue = properties[varName]
+    if (varName == 'VERSION_CODE' || varName == 'VERSION_PATCH') {
+
+        // If we are building release increment the version code
+        List gradleTasksNames = gradle.startParameter.getTaskNames()
+        for (String taskName : gradleTasksNames) {
+            if (taskName.contains("Release")) {
+                propertyValue = propertyValue.toInteger() + 1
+                properties[varName] = propertyValue.toString()
+                properties.store(propertiesFile.newWriter(), null)
+                break
+            }
+        }
+    }
+
+    return propertyValue
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.cindymb.airportapplication"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.valueOf(getVersionPropertiesValue('VERSION_CODE'))
+        versionName Integer.valueOf(getVersionPropertiesValue('VERSION_MAJOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_MINOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_PATCH'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField('String', 'APP_API_KEY', '"9e90c8-ae1786"')
+
     }
     buildTypes {
         release {
