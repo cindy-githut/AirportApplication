@@ -37,7 +37,7 @@ android {
         versionCode Integer.valueOf(getVersionPropertiesValue('VERSION_CODE'))
         versionName Integer.valueOf(getVersionPropertiesValue('VERSION_MAJOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_MINOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_PATCH'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField('String', 'APP_API_KEY', '"9e90c8-ae1786"')
+        buildConfigField('String', 'APP_AIRPORT_API_KEY', '"9e90c8-ae1786"')
 
     }
     buildTypes {
