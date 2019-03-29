@@ -50,12 +50,13 @@ android {
         applicationId "com.cindymb.airportapplication"
         minSdkVersion 19
         targetSdkVersion 28
+        vectorDrawables.useSupportLibrary = true
         versionCode Integer.valueOf(getVersionPropertiesValue('VERSION_CODE'))
         versionName Integer.valueOf(getVersionPropertiesValue('VERSION_MAJOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_MINOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_PATCH'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField('String', 'APP_AIRPORT_API_KEY', '"9e90c8-ae1786"')
 
-        manifestPlaceholders = [fabricApiKey: "34491b12f09ab2dbcaed517b724f3d73a9ecf793",
+        manifestPlaceholders = [fabricApiKey    : "34491b12f09ab2dbcaed517b724f3d73a9ecf793",
                                 googleMapsApiKey: "AIzaSyBw3Z9RSmT0M-RZVFuVTasfiCJHzR2Emfg"]
 
     }
@@ -83,6 +84,7 @@ dependencies {
     def easy_version = "1.1.3"
     def google_maps_version = "16.1.0"
     def fused_location_version = "16.0.0"
+    def gson_version = '2.8.5'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -112,4 +114,6 @@ dependencies {
     //fused location
     implementation "com.google.android.gms:play-services-location:$fused_location_version"
 
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
 }

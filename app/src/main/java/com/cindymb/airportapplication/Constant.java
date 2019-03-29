@@ -1,8 +1,8 @@
 package com.cindymb.airportapplication;
 
-class Constant {
+public class Constant {
 
     /*  Runtime permissions */
-    static final int PERMISSION_CODE = 100;
+    public static final int PERMISSION_CODE = 100;
 
 }

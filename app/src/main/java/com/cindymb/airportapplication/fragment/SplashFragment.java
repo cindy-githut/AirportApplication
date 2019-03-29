@@ -1,4 +1,4 @@
-package com.cindymb.airportapplication;
+package com.cindymb.airportapplication.fragment;
 
 import android.Manifest;
 import android.os.Build;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cindymb.airportapplication.Constant;
+import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.base.BaseFragment;
 import com.cindymb.airportapplication.databinding.FragmentSplashBinding;
 
@@ -20,11 +22,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class SplashFragment extends BaseFragment {
-    private FragmentSplashBinding mFragmentSplashBinding;
-
-    public SplashFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +30,7 @@ public class SplashFragment extends BaseFragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mFragmentSplashBinding = FragmentSplashBinding.inflate(inflater, container, false);
+        FragmentSplashBinding mFragmentSplashBinding = FragmentSplashBinding.inflate(inflater, container, false);
         mFragmentSplashBinding.splashProgressBar.setProgress(10);
         //navigateToNextScreen(R.id.action_splashFragment_to_departureFragment, new NavOptions.Builder().setPopUpTo(R.id.splashFragment, true).build());
         mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);

@@ -12,15 +12,49 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textAppearance">@color/black</item>
     </style>
-    <!--<style name="AppTheme_" parent="Theme.AppCompat.DayNight.NoActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@android:color/white</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/black</item>-->
-        <!--&lt;!&ndash;<item name="android:fontFamily">@font/didact_gothic</item>&ndash;&gt;-->
-        <!--<item name="android:textAllCaps">false</item>-->
-        <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
-        <!--<item name="android:textColorHint">@color/black</item>-->
 
-    <!--</style>-->
+    <!--Base font with text size 12sp and black_gray text-->
+    <!--BaseFont-->
+    <style name="BaseFont">
+        <item name="android:textSize">@dimen/text_12sp</item>
+        <item name="android:textColor">@color/color_black_gray</item>
+    </style>
+
+    <!--BaseRobotoRegular font with BaseFont as parent and  Roboto Regular font-->
+    <!--BaseRobotoRegular-->
+    <style name="BaseRobotoRegular" parent="BaseFont">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <!--BaseRobotoMedium font with BaseFont as parent and  Roboto Medium font-->
+    <!--BaseRobotoMedium-->
+    <style name="BaseRobotoMedium" parent="BaseFont">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <!--BaseRobotoRegular-->
+    <!--BaseRobotoRegular font with text size 12sp -->
+    <style name="FontBlackGray12Regular" parent="BaseRobotoRegular">
+        <item name="android:textSize">@dimen/text_12sp</item>
+    </style>
+
+    <!--BaseRobotoRegular font with text size 14sp -->
+    <style name="FontBlackGray14Regular" parent="BaseRobotoRegular">
+        <item name="android:textSize">@dimen/text_14sp</item>
+    </style>
+
+    <!--FontBlue14Medium-->
+    <!--BaseRobotoMedium font with text size 14sp and base blue text color-->
+    <style name="FontBlue14Medium" parent="BaseRobotoMedium">
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:color">@color/color_base_blue</item>
+    </style>
+
+    <!--FontBlue14Medium-->
+    <!--BaseRobotoMedium font with text size 16sp and black text color-->
+    <style name="FontBlack16Medium" parent="BaseRobotoMedium">
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:color">@color/black</item>
+    </style>
+
 </resources>

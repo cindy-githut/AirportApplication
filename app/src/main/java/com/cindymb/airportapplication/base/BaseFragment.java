@@ -100,5 +100,4 @@ public class BaseFragment extends Fragment {
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
-
 }
