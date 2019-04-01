@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cindymb.airportapplication.Constant;
+import com.cindymb.airportapplication.utils.Constant;
 import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.base.BaseFragment;
 import com.cindymb.airportapplication.databinding.FragmentMapsBinding;
@@ -34,6 +34,9 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
 
     @Inject
     MyViewModelFactory mFactory;
+    @Inject
+    NearbyAirportRequestModel mNearbyAirportRequestModel;
+
     private GoogleMap mGoogleMap;
     private LatLng mCurrentLatLng;
     private NearbyAirportViewModel mNearbyAirportViewModel;
@@ -50,7 +53,11 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
         mFragmentMapsBinding = FragmentMapsBinding.inflate(inflater, container, false);
         mFragmentMapsBinding.mapView.onCreate(savedInstanceState);
         mFragmentMapsBinding.mapView.onResume();
-        mFragmentMapsBinding.mapView.getMapAsync(this);
+        if(isConnected(requireActivity())){
+            mFragmentMapsBinding.mapView.getMapAsync(this);
+        }else{
+            displayDialog(getString(R.string.lbl_connectionError));
+        }
         return mFragmentMapsBinding.getRoot();
     }
 
@@ -95,11 +102,13 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
                             googleMap.getUiSettings().setZoomControlsEnabled(false);
 
                             if (mCurrentLatLng != null) {
-                                NearbyAirportRequestModel nearbyAirportRequestModel = new NearbyAirportRequestModel();
-                                nearbyAirportRequestModel.setLatLng(mCurrentLatLng);
-                                mNearbyAirportViewModel.getNearbyAirportListAPI(nearbyAirportRequestModel);
+                                mNearbyAirportRequestModel.setLatLng(mCurrentLatLng);
+                                if(isConnected(requireActivity())){
+                                    mNearbyAirportViewModel.getNearbyAirportListAPI(mNearbyAirportRequestModel);
+                                }else{
+                                    displayDialog(getString(R.string.lbl_connectionError));
+                                }
                             }
-
                         } else {
                             displayDialog(getString(R.string.msg_location_error));
                         }

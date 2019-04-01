@@ -30,23 +30,20 @@ public class NearbyAirportRepository extends BaseRepository {
 
     public void getNearbyAirportList(NearbyAirportRequestModel nearbyAirportRequestModel) {
         if (nearbyAirportRequestModel != null) {
+            showProgressDialog(true);
             LatLng currentLatLng = nearbyAirportRequestModel.getLatLng();
-            //TODO
-            //SHOW PROGRESSBAR
             mApiService.getNearbyAirportList(currentLatLng.latitude, currentLatLng.longitude, 100)
                     .enqueue(new Callback<NearbyAirportResponse>() {
                         @Override
                         public void onResponse(Call<NearbyAirportResponse> call, Response<NearbyAirportResponse> response) {
-                            //TODO
-                            //HIDE PROGRESSBAR
+                            handleSuccessResponse(response);
                             if (response.body() == null) return;
                             mMutableLiveData.setValue(response.body());
                         }
 
                         @Override
                         public void onFailure(Call<NearbyAirportResponse> call, Throwable t) {
-                            //TODO
-                            //Handle Error
+                            handleErrorResponse(t);
                         }
                     });
         } else {

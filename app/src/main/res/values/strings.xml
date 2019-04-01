@@ -7,4 +7,5 @@
     <string name="lbl_map_error">Could not load the map</string>
     <string name="msg_location_error">failed to get your current location, please ensure your location is switched on and try again</string>
     <string name="lbl_generic_error">Generic Error</string>
+    <string name="lbl_connectionError">Connection Error, please check your internet and try again</string>
 </resources>
