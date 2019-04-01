@@ -1,0 +1,21 @@
+<resources>
+    <!--Font sizes-->
+    <dimen name="text_12sp">12sp</dimen>
+    <dimen name="text_14sp">14sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+
+    <!--Margin sizes-->
+    <dimen name="margin_0">0dp</dimen>
+    <dimen name="margin_1">1dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+
+    <!--Cardview sizes-->
+    <dimen name="card_elevation_4">4dp</dimen>
+    <dimen name="card_elevation_8">8dp</dimen>
+
+</resources>
