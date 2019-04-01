@@ -13,8 +13,11 @@ import com.cindymb.airportapplication.Constant;
 import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.base.BaseFragment;
 import com.cindymb.airportapplication.databinding.FragmentSplashBinding;
+import com.cindymb.airportapplication.di.MyViewModelFactory;
 
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
 
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
@@ -22,6 +25,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class SplashFragment extends BaseFragment {
+
+    @Inject
+    MyViewModelFactory mFactory;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

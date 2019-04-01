@@ -3,7 +3,7 @@ package com.cindymb.airportapplication.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AirportModel {
+public class NearbyAirportModel {
 
     @Expose
     @SerializedName("nameAirport")
