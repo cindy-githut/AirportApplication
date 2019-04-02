@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mCustomCustomProgressDialog = new CustomProgressDialog(this);
+
         try {
             AndroidInjection.inject(this);
         } catch (IllegalArgumentException aE) {
@@ -95,17 +96,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
-    }
-
-    /**
-     * Displays a dialog with just positive actions
-     *
-     * @param aMessage      - Message to display
-     * @param aPositiveText - Positive Text eg YES / Okay
-     * @param aNegativeText - Negative text eg NO / Cancel
-     */
-    protected void displayDialog(String aMessage, String aPositiveText, DialogInterface.OnClickListener aPositiveListener, String aNegativeText) {
-        displayDialog(aMessage, aPositiveText, aPositiveListener, aNegativeText, null, true);
     }
 
     /**

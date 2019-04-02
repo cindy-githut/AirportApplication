@@ -1,61 +1,47 @@
 package com.cindymb.airportapplication.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class NearbyAirportModel {
 
-    @Expose
     @SerializedName("nameAirport")
     public String nameAirport;
 
-    @Expose
     @SerializedName("codeIataAirport")
     public String codeIataAirport;
 
-    @Expose
     @SerializedName("codeIcaoAirport")
     public String codeIcaoAirport;
 
-    @Expose
     @SerializedName("nameTranslations")
     public String nameTranslations;
 
-    @Expose
     @SerializedName("latitudeAirport")
-    public double latitudeAirport;
+    public String latitudeAirport;
 
-    @Expose
     @SerializedName("longitudeAirport")
-    public double longitudeAirport;
+    public String longitudeAirport;
 
-    @Expose
     @SerializedName("timezone")
     public String timezone;
 
-    @Expose
     @SerializedName("GMT")
     public String GMT;
 
-    @Expose
     @SerializedName("phone")
     public String phone;
 
-    @Expose
     @SerializedName("nameCountry")
     public String nameCountry;
 
-    @Expose
     @SerializedName("codeIso2Country")
     public String codeIso2Country;
 
-    @Expose
     @SerializedName("codeIataCity")
     public String codeIataCity;
 
-    @Expose
     @SerializedName("distance")
-    public double distance;
+    public String distance;
 
 
     public String getNameAirport() {
@@ -90,19 +76,19 @@ public class NearbyAirportModel {
         this.nameTranslations = nameTranslations;
     }
 
-    public double getLatitudeAirport() {
+    public String getLatitudeAirport() {
         return latitudeAirport;
     }
 
-    public void setLatitudeAirport(double latitudeAirport) {
+    public void setLatitudeAirport(String latitudeAirport) {
         this.latitudeAirport = latitudeAirport;
     }
 
-    public double getLongitudeAirport() {
+    public String getLongitudeAirport() {
         return longitudeAirport;
     }
 
-    public void setLongitudeAirport(double longitudeAirport) {
+    public void setLongitudeAirport(String longitudeAirport) {
         this.longitudeAirport = longitudeAirport;
     }
 
@@ -154,11 +140,11 @@ public class NearbyAirportModel {
         this.codeIataCity = codeIataCity;
     }
 
-    public double getDistance() {
+    public String getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(String distance) {
         this.distance = distance;
     }
 }

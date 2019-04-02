@@ -4,10 +4,12 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.cindymb.airportapplication.base.BaseRepository;
+import com.cindymb.airportapplication.model.NearbyAirportModel;
 import com.cindymb.airportapplication.model.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.services.ApiService;
-import com.cindymb.airportapplication.services.NearbyAirportResponse;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NearbyAirportRepository extends BaseRepository {
-    private final MutableLiveData<NearbyAirportResponse> mMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<NearbyAirportModel>> mMutableLiveData = new MutableLiveData<>();
 
     private final Application mApplication;
     private final ApiService mApiService;
@@ -29,30 +31,29 @@ public class NearbyAirportRepository extends BaseRepository {
     }
 
     public void getNearbyAirportList(NearbyAirportRequestModel nearbyAirportRequestModel) {
-        if (nearbyAirportRequestModel != null) {
+        if (nearbyAirportRequestModel.getLatLng() != null) {
             showProgressDialog(true);
             LatLng currentLatLng = nearbyAirportRequestModel.getLatLng();
+
             mApiService.getNearbyAirportList(currentLatLng.latitude, currentLatLng.longitude, 100)
-                    .enqueue(new Callback<NearbyAirportResponse>() {
+                    .enqueue(new Callback<List<NearbyAirportModel>>() {
                         @Override
-                        public void onResponse(Call<NearbyAirportResponse> call, Response<NearbyAirportResponse> response) {
-                            handleSuccessResponse(response);
+                        public void onResponse(Call<List<NearbyAirportModel>> call, Response<List<NearbyAirportModel>> response) {
+                            // handleSuccessResponse(response);
+                            showProgressDialog(false);
                             if (response.body() == null) return;
                             mMutableLiveData.setValue(response.body());
                         }
 
                         @Override
-                        public void onFailure(Call<NearbyAirportResponse> call, Throwable t) {
+                        public void onFailure(Call<List<NearbyAirportModel>> call, Throwable t) {
                             handleErrorResponse(t);
                         }
                     });
-        } else {
-            //TODO
-            //display currentLatLng Error
         }
     }
 
-    public MutableLiveData<NearbyAirportResponse> getNearbyAirportResponse() {
+    public MutableLiveData<List<NearbyAirportModel>> getNearbyAirportResponse() {
         return mMutableLiveData;
     }
 }

@@ -48,14 +48,15 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.cindymb.airportapplication"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         vectorDrawables.useSupportLibrary = true
         versionCode Integer.valueOf(getVersionPropertiesValue('VERSION_CODE'))
         versionName Integer.valueOf(getVersionPropertiesValue('VERSION_MAJOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_MINOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_PATCH'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField('String', 'APP_AIRPORT_API_KEY', '"9e90c8-ae1786"')
-        buildConfigField('String', 'BASE_URL', '" https://aviation-edge.com/api/public/"')
+//        buildConfigField('String', 'BASE_URL', '"http://aviation-edge.com/v2/public/"')
+        buildConfigField('String', 'BASE_URL', '"https://5ca32815190b430014edbbf9.mockapi.io/"')
 
         manifestPlaceholders = [fabricApiKey    : "34491b12f09ab2dbcaed517b724f3d73a9ecf793",
                                 googleMapsApiKey: "AIzaSyBw3Z9RSmT0M-RZVFuVTasfiCJHzR2Emfg"]
