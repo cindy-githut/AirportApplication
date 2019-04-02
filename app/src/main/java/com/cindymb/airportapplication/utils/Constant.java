@@ -1,4 +1,4 @@
-package com.cindymb.airportapplication;
+package com.cindymb.airportapplication.utils;
 
 public class Constant {
 
