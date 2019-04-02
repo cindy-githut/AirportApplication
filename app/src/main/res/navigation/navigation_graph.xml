@@ -26,9 +26,17 @@
             android:id="@+id/action_mapsFragment_to_departureFragment"
             app:destination="@id/departureFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/departureFragment"
-        android:name="com.cindymb.airportapplication.fragment.DepartureFragment"
+        android:name="com.cindymb.airportapplication.fragment.FlightScheduleFragment"
         android:label="fragment_departure"
-        tools:layout="@layout/fragment_departure" />
+        tools:layout="@layout/fragment_departure" >
+
+        <!--Mandatory argument-->
+        <argument
+            android:name="iataCode"
+            app:argType="string" />
+
+    </fragment>
 </navigation>

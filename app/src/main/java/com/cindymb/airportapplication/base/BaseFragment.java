@@ -16,11 +16,13 @@ import android.text.TextUtils;
 import android.widget.Button;
 
 import com.cindymb.airportapplication.R;
+import com.cindymb.airportapplication.fragment.MapsFragmentDirections;
 import com.cindymb.airportapplication.utils.LoggingHelper;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import dagger.android.support.AndroidSupportInjection;
@@ -81,6 +83,9 @@ public class BaseFragment extends Fragment {
         mNavController.navigate(aResId, null, aNavOptions);
     }
 
+    public void navigateToNextScreenWithArguments(NavDirections aNavDirections) {
+        mNavController.navigate(aNavDirections);
+    }
     public void displayDialog(String aMessage) {
         if (!isAdded()) return;
         displayDialog(aMessage, getString(R.string.lbl_ok), null, null, null, true);

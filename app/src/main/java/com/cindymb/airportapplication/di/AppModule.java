@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.cindymb.airportapplication.BuildConfig;
-import com.cindymb.airportapplication.model.NearbyAirportRequestModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.services.ApiService;
 import com.cindymb.airportapplication.utils.LoggingHelper;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -108,4 +108,5 @@ public class AppModule {
     NearbyAirportRequestModel providesNearbyAirportRequestModel() {
         return new NearbyAirportRequestModel();
     }
+
 }

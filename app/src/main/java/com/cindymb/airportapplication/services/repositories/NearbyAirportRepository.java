@@ -4,8 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.cindymb.airportapplication.base.BaseRepository;
-import com.cindymb.airportapplication.model.NearbyAirportModel;
-import com.cindymb.airportapplication.model.NearbyAirportRequestModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.services.ApiService;
 import com.google.android.gms.maps.model.LatLng;
 

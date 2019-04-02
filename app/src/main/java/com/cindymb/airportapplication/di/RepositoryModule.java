@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.cindymb.airportapplication.base.BaseRepository;
 import com.cindymb.airportapplication.services.ApiService;
+import com.cindymb.airportapplication.services.repositories.FlightScheduleRepository;
 import com.cindymb.airportapplication.services.repositories.NearbyAirportRepository;
 
 import dagger.Module;
@@ -20,5 +21,10 @@ public class RepositoryModule {
     @Provides
     NearbyAirportRepository provideNearbyAirportRepository(Application aApplication, ApiService aApiService) {
         return new NearbyAirportRepository(aApplication, aApiService);
+    }
+
+    @Provides
+    FlightScheduleRepository provideFlightScheduleRepository(Application aApplication, ApiService aApiService) {
+        return new FlightScheduleRepository(aApplication, aApiService);
     }
 }

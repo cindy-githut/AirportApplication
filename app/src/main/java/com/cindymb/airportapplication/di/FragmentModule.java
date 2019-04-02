@@ -1,6 +1,7 @@
 package com.cindymb.airportapplication.di;
 
 
+import com.cindymb.airportapplication.fragment.FlightScheduleFragment;
 import com.cindymb.airportapplication.fragment.MapsFragment;
 import com.cindymb.airportapplication.fragment.SplashFragment;
 
@@ -16,5 +17,6 @@ public abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract SplashFragment splashFragment();
 
-
+    @ContributesAndroidInjector
+    abstract FlightScheduleFragment departureFragment();
 }

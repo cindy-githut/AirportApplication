@@ -4,6 +4,7 @@ import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.base.BaseFragment;
 import com.cindymb.airportapplication.databinding.FragmentMapsBinding;
 import com.cindymb.airportapplication.di.MyViewModelFactory;
-import com.cindymb.airportapplication.model.NearbyAirportRequestModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.utils.Constant;
+import com.cindymb.airportapplication.utils.LoggingHelper;
 import com.cindymb.airportapplication.viewModel.NearbyAirportViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,7 +42,6 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
     private GoogleMap mGoogleMap;
     private LatLng mCurrentLatLng;
     private NearbyAirportViewModel mNearbyAirportViewModel;
-    private FragmentMapsBinding mFragmentMapsBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,16 +51,16 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mFragmentMapsBinding = FragmentMapsBinding.inflate(inflater, container, false);
-        mFragmentMapsBinding.mapView.onCreate(savedInstanceState);
-        mFragmentMapsBinding.mapView.onResume();
+        FragmentMapsBinding aFragmentMapsBinding = FragmentMapsBinding.inflate(inflater, container, false);
+        aFragmentMapsBinding.mapView.onCreate(savedInstanceState);
+        aFragmentMapsBinding.mapView.onResume();
 
         if (isConnected(requireActivity())) {
-            mFragmentMapsBinding.mapView.getMapAsync(this);
+            aFragmentMapsBinding.mapView.getMapAsync(this);
         } else {
             displayDialog(getString(R.string.lbl_connectionError));
         }
-        return mFragmentMapsBinding.getRoot();
+        return aFragmentMapsBinding.getRoot();
     }
 
     @Override
@@ -71,6 +73,7 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
                 mNearbyAirportViewModel.plotAirportsOnMap(nearbyAirportList, mGoogleMap);
             }
         });
+
     }
 
     @AfterPermissionGranted(Constant.PERMISSION_CODE)
@@ -82,6 +85,28 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
             if (mGoogleMap == null) {
                 mGoogleMap = googleMap;
                 mGoogleMap.setMyLocationEnabled(true);
+
+                mGoogleMap.setOnMarkerClickListener(marker -> {
+                    LoggingHelper.information(MapsFragment.class, marker.getPosition().toString());
+                    for (NearbyAirportModel aNearbyAirportModel : mNearbyAirportViewModel.getAirportListPloted()) {
+
+                        LatLng plotedAirportLatLng = new LatLng(Double.parseDouble(aNearbyAirportModel.getLatitudeAirport()), Double.parseDouble(aNearbyAirportModel.getLongitudeAirport()));
+
+                        if (marker.getPosition().equals(plotedAirportLatLng)) {
+                            if (!TextUtils.isEmpty(aNearbyAirportModel.getCodeIataAirport())) {
+                                MapsFragmentDirections.ActionMapsFragmentToDepartureFragment action = MapsFragmentDirections.actionMapsFragmentToDepartureFragment(aNearbyAirportModel.getCodeIataAirport());
+
+                                navigateToNextScreenWithArguments(action);
+
+                            } else {
+                                displayDialog(getString(R.string.msg_iata_error));
+                            }
+                            break;
+                        }
+                    }
+                    return true;
+                });
+
             }
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setRotateGesturesEnabled(false);
@@ -125,4 +150,5 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
             displayDialog(String.format("%s %s", getString(R.string.lbl_map_error), exception.getMessage()));
         }
     }
+
 }

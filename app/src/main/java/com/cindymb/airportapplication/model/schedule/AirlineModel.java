@@ -1,4 +1,4 @@
-package com.cindymb.airportapplication.model;
+package com.cindymb.airportapplication.model.schedule;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

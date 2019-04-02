@@ -9,8 +9,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cindymb.airportapplication.R;
-import com.cindymb.airportapplication.model.NearbyAirportModel;
-import com.cindymb.airportapplication.model.NearbyAirportRequestModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportModel;
+import com.cindymb.airportapplication.model.nearby.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.services.repositories.NearbyAirportRepository;
 import com.cindymb.airportapplication.utils.LoggingHelper;
 import com.google.android.gms.maps.CameraUpdate;
@@ -40,6 +40,7 @@ public class NearbyAirportViewModel extends ViewModel {
     };
     @Inject
     NearbyAirportRequestModel mNearbyAirportRequestModel;
+    List<NearbyAirportModel> mAirportPlotPoint = new ArrayList<>();
     private NearbyAirportRepository mNearbyAirportRepository;
 
     @Inject
@@ -58,6 +59,10 @@ public class NearbyAirportViewModel extends ViewModel {
         return mNearbyAirportList;
     }
 
+    public List<NearbyAirportModel> getAirportListPloted() {
+        return mAirportPlotPoint;
+    }
+
     public void plotAirportsOnMap(List<NearbyAirportModel> airportModelList, GoogleMap aGoogleMap) {
 
         List<NearbyAirportModel> airportPlotPoint = new ArrayList<>();
@@ -68,13 +73,14 @@ public class NearbyAirportViewModel extends ViewModel {
                 airportPlotPoint.add(aNearbyAirportModel);
             }
         }
+        mAirportPlotPoint = airportPlotPoint;
 
         if (airportPlotPoint.size() > 0) {
             plotAirportPoint(airportPlotPoint, aGoogleMap);
         }
     }
 
-    public void plotAirportPoint(List<NearbyAirportModel> airportPlotPointList, GoogleMap aGoogleMap) {
+    private void plotAirportPoint(List<NearbyAirportModel> airportPlotPointList, GoogleMap aGoogleMap) {
         if (aGoogleMap != null) {
 
             try {

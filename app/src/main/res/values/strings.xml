@@ -8,4 +8,5 @@
     <string name="msg_location_error">failed to get your current location, please ensure your location is switched on and try again</string>
     <string name="lbl_generic_error">Generic Error</string>
     <string name="lbl_connectionError">Connection Error, please check your internet and try again</string>
+    <string name="msg_iata_error">Aiport IATA not found</string>
 </resources>
