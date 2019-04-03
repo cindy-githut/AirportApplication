@@ -133,7 +133,7 @@ public class BaseActivity extends AppCompatActivity {
      */
     public void displayDialog(String aMessage, String aPositiveText, DialogInterface.OnClickListener aPositiveOnClick, boolean cancellable) {
         if (TextUtils.isEmpty(aMessage)) {
-            aMessage = getString(R.string.lbl_generic_error);
+            aMessage = getString(R.string.msg_generic_error);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
         builder.setMessage(aMessage);

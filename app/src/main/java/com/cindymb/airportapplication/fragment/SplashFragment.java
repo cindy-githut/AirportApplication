@@ -59,7 +59,7 @@ public class SplashFragment extends BaseFragment {
         if (isConnected(requireActivity())) {
             navigateToNextScreen(R.id.action_splashFragment_to_mapsFragment, new NavOptions.Builder().setPopUpTo(R.id.splashFragment, true).build());
         } else {
-            displayDialog(getString(R.string.lbl_connectionError));
+            displayDialog(getString(R.string.msg_connectionError));
         }
     }
 }

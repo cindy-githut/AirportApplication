@@ -102,7 +102,7 @@ public class BaseFragment extends Fragment {
     public void displayDialog(String aMessage, String aPositiveText, DialogInterface.OnClickListener aPositiveOnClick, boolean cancellable) {
         if (!isAdded()) return;
         if (TextUtils.isEmpty(aMessage)) {
-            aMessage = getString(R.string.lbl_an_error_occured);
+            aMessage = getString(R.string.msg_an_error_occured);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom);
         builder.setMessage(aMessage);

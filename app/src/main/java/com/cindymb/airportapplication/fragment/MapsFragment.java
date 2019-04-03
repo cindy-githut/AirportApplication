@@ -77,7 +77,7 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Go
         if (isConnected(requireActivity())) {
             aFragmentMapsBinding.mapView.getMapAsync(this);
         } else {
-            displayDialog(getString(R.string.lbl_connectionError));
+            displayDialog(getString(R.string.msg_connectionError));
         }
         return aFragmentMapsBinding.getRoot();
     }
@@ -152,7 +152,7 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Go
                     mNearbyAirportViewModel.plotAirportsOnMap(mNearbyAirportModelList, mGoogleMap);
                 }
             } else {
-                displayDialog(getString(R.string.lbl_connectionError));
+                displayDialog(getString(R.string.msg_connectionError));
             }
 
             mGoogleMap.setOnMarkerClickListener(this);

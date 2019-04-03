@@ -65,7 +65,7 @@ public class FlightScheduleFragment extends BaseFragment {
         if (isConnected(requireActivity())) {
             mFlightScheduleViewModel.getFlightScheduleListAPI(mIATA);
         } else {
-            displayDialog(getString(R.string.lbl_connectionError));
+            displayDialog(getString(R.string.msg_connectionError));
         }
         mFlightScheduleViewModel.getFlightScheduleList().observe(this, flightScheduleList -> {
             if (flightScheduleList != null && flightScheduleList.size() > 0) {

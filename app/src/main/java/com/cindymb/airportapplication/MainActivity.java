@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
                     .build();
 
         } else {
-            displayDialog(getString(R.string.lbl_connectionError));
+            displayDialog(getString(R.string.msg_connectionError));
         }
     }
 
