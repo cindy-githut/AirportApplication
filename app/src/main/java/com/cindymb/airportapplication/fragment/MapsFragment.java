@@ -13,10 +13,10 @@ import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.base.BaseFragment;
 import com.cindymb.airportapplication.databinding.FragmentMapsBinding;
 import com.cindymb.airportapplication.di.MyViewModelFactory;
+import com.cindymb.airportapplication.eventnus.Events;
 import com.cindymb.airportapplication.model.nearby.NearbyAirportModel;
 import com.cindymb.airportapplication.model.nearby.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.utils.Constant;
-import com.cindymb.airportapplication.utils.LoggingHelper;
 import com.cindymb.airportapplication.viewModel.NearbyAirportViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,15 +24,23 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
+public class MapsFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     @Inject
     MyViewModelFactory mFactory;
@@ -42,15 +50,26 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
     private GoogleMap mGoogleMap;
     private LatLng mCurrentLatLng;
     private NearbyAirportViewModel mNearbyAirportViewModel;
+    private List<NearbyAirportModel> mNearbyAirportModelList = new ArrayList<>();
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Events.ConnectedEvent event) {
+        if (event.getConnected()) {
+            getCurrentLocation();
+        } else {
+            displayDialog(getString(R.string.msg_google_api_error));
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         FragmentMapsBinding aFragmentMapsBinding = FragmentMapsBinding.inflate(inflater, container, false);
         aFragmentMapsBinding.mapView.onCreate(savedInstanceState);
         aFragmentMapsBinding.mapView.onResume();
@@ -70,85 +89,110 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback {
 
         mNearbyAirportViewModel.getNearbyAirportList().observe(this, nearbyAirportList -> {
             if (nearbyAirportList != null && nearbyAirportList.size() > 0) {
-                mNearbyAirportViewModel.plotAirportsOnMap(nearbyAirportList, mGoogleMap);
+                mNearbyAirportModelList = nearbyAirportList;
+                mNearbyAirportViewModel.plotAirportsOnMap(mNearbyAirportModelList, mGoogleMap);
             }
         });
-
     }
 
-    @AfterPermissionGranted(Constant.PERMISSION_CODE)
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        try {
-
-            if (mGoogleMap == null) {
-                mGoogleMap = googleMap;
-                mGoogleMap.setMyLocationEnabled(true);
-
-                mGoogleMap.setOnMarkerClickListener(marker -> {
-                    LoggingHelper.information(MapsFragment.class, marker.getPosition().toString());
-                    for (NearbyAirportModel aNearbyAirportModel : mNearbyAirportViewModel.getAirportListPloted()) {
-
-                        LatLng plotedAirportLatLng = new LatLng(Double.parseDouble(aNearbyAirportModel.getLatitudeAirport()), Double.parseDouble(aNearbyAirportModel.getLongitudeAirport()));
-
-                        if (marker.getPosition().equals(plotedAirportLatLng)) {
-                            if (!TextUtils.isEmpty(aNearbyAirportModel.getCodeIataAirport())) {
-                                MapsFragmentDirections.ActionMapsFragmentToDepartureFragment action = MapsFragmentDirections.actionMapsFragmentToDepartureFragment(aNearbyAirportModel.getCodeIataAirport());
-
-                                navigateToNextScreenWithArguments(action);
-
-                            } else {
-                                displayDialog(getString(R.string.msg_iata_error));
-                            }
-                            break;
-                        }
-                    }
-                    return true;
-                });
-
-            }
-            googleMap.getUiSettings().setZoomControlsEnabled(true);
-            googleMap.getUiSettings().setRotateGesturesEnabled(false);
-
-            if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
-
-                mFusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
-
-                    try {
-                        if (location != null) {
-                            mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                            googleMap.clear();
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 14.0f));
-                            googleMap.getUiSettings().setZoomControlsEnabled(false);
-
-                            if (mCurrentLatLng != null) {
-                                mNearbyAirportRequestModel.setLatLng(mCurrentLatLng);
-                                if (isConnected(requireActivity())) {
-                                    mNearbyAirportViewModel.getNearbyAirportListAPI(mNearbyAirportRequestModel);
-                                } else {
-                                    displayDialog(getString(R.string.lbl_connectionError));
-                                }
-                            }
-                        } else {
-                            displayDialog(getString(R.string.msg_location_error));
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        displayDialog(String.format("%s %s", getString(R.string.lbl_map_error), e.getMessage()));
-                    }
-                });
-            } else {
-                EasyPermissions.requestPermissions(requireActivity(), getString(R.string.msg_permission_request), Constant.PERMISSION_CODE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
-            }
-
-        } catch (SecurityException exception) {
-            exception.printStackTrace();
-            displayDialog(String.format("%s %s", getString(R.string.lbl_map_error), exception.getMessage()));
+    public void onResume() {
+        super.onResume();
+        if (mGoogleMap != null) {
+            getCurrentLocation();
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @AfterPermissionGranted(Constant.PERMISSION_CODE)
+    private void getCurrentLocation() {
+        if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+            FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
+            try {
+
+                mFusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
+                    if (location != null) {
+                        mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        moveMap();
+                    } else {
+                        displayDialog(getString(R.string.msg_location_error));
+                    }
+                });
+
+            } catch (SecurityException sec) {
+                displayDialog(sec.getMessage());
+            }
+        } else {
+            EasyPermissions.requestPermissions(requireActivity(), getString(R.string.msg_permission_request), Constant.PERMISSION_CODE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+    }
+
+    private void moveMap() {
+        mGoogleMap.clear();
+        mGoogleMap.addMarker(new MarkerOptions()
+                .position(mCurrentLatLng));
+
+        try {
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(mCurrentLatLng));
+            mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+            mGoogleMap.setMyLocationEnabled(true);
+
+            mNearbyAirportRequestModel.setLatLng(mCurrentLatLng);
+            if (isConnected(requireActivity())) {
+                if (mNearbyAirportModelList.size() == 0) {
+                    mNearbyAirportViewModel.getNearbyAirportListAPI(mNearbyAirportRequestModel);
+                } else {
+                    mNearbyAirportViewModel.plotAirportsOnMap(mNearbyAirportModelList, mGoogleMap);
+                }
+            } else {
+                displayDialog(getString(R.string.lbl_connectionError));
+            }
+
+            mGoogleMap.setOnMarkerClickListener(this);
+        } catch (SecurityException sec) {
+            displayDialog(sec.getMessage());
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mGoogleMap = googleMap;
+        //this is to focus the map on Gauteng when loading the map, changes after getting the users current location
+        mGoogleMap.addMarker(new MarkerOptions().position(GAUTENG_COORDINATES));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(GAUTENG_COORDINATES));
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mGoogleMap.getUiSettings().setRotateGesturesEnabled(false);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        for (NearbyAirportModel aNearbyAirportModel : mNearbyAirportViewModel.getAirportListPloted()) {
+
+            LatLng plotedAirportLatLng = new LatLng(Double.parseDouble(aNearbyAirportModel.getLatitudeAirport()), Double.parseDouble(aNearbyAirportModel.getLongitudeAirport()));
+
+            if (marker.getPosition().equals(plotedAirportLatLng)) {
+                if (!TextUtils.isEmpty(aNearbyAirportModel.getCodeIataAirport())) {
+
+                    MapsFragmentDirections.ActionMapsFragmentToDepartureFragment action = MapsFragmentDirections.actionMapsFragmentToDepartureFragment(aNearbyAirportModel.getCodeIataAirport());
+                    navigateToNextScreenWithArguments(action);
+
+                } else {
+
+                    displayDialog(getString(R.string.msg_iata_error));
+
+                }
+                break;
+            }
+        }
+        return true;
+    }
 }

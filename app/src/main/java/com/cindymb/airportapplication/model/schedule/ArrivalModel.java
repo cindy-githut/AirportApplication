@@ -2,27 +2,17 @@ package com.cindymb.airportapplication.model.schedule;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AirlineModel {
-
-
-    @SerializedName("name")
-    public String name;
+public class ArrivalModel {
 
     @SerializedName("iataCode")
     public String iataCode;
 
-
     @SerializedName("icaoCode")
     public String icaoCode;
 
+    @SerializedName("scheduledTime")
+    public String scheduledTime;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getIataCode() {
         return iataCode;
@@ -38,5 +28,13 @@ public class AirlineModel {
 
     public void setIcaoCode(String icaoCode) {
         this.icaoCode = icaoCode;
+    }
+
+    public String getScheduledTime() {
+        return scheduledTime;
+    }
+
+    public void setScheduledTime(String scheduledTime) {
+        this.scheduledTime = scheduledTime;
     }
 }

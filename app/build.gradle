@@ -93,6 +93,7 @@ dependencies {
     def lifecycle_version = "1.1.1"
     def dagger2_version = "2.19"
     def okhttp3_version = "3.9.1"
+    def eventbus_version = "3.1.1"
 
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -102,6 +103,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Eventbus
+    implementation "org.greenrobot:eventbus:$eventbus_version"
 
     //navigation components
     implementation "android.arch.navigation:navigation-fragment:$navigation_version"
@@ -114,6 +118,7 @@ dependencies {
     //Stetho debug bridge
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
     // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 

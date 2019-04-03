@@ -1,42 +1,38 @@
 package com.cindymb.airportapplication.model.schedule;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DepartureModel {
-    @Expose
+
     @SerializedName("iataCode")
     public String iataCode;
 
-    @Expose
+
     @SerializedName("icaoCode")
     public String icaoCode;
 
-    @Expose
     @SerializedName("terminal")
     public String terminal;
 
-    @Expose
     @SerializedName("gate")
     public String gate;
 
-    @Expose
+
     @SerializedName("scheduledTime")
     public String scheduledTime;
 
-    @Expose
     @SerializedName("estimatedTime")
     public String estimatedTime;
 
-    @Expose
+
     @SerializedName("actualTime")
     public String actualTime;
 
-    @Expose
+
     @SerializedName("estimatedRunway")
     public String estimatedRunway;
 
-    @Expose
+
     @SerializedName("actualRunway")
     public String actualRunway;
 

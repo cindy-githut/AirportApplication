@@ -1,18 +1,15 @@
 package com.cindymb.airportapplication.model.schedule;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class FlightModel {
-    @Expose
+
     @SerializedName("number")
     public String number;
 
-    @Expose
     @SerializedName("iataNumber")
     public String iataNumber;
 
-    @Expose
     @SerializedName("icaoNumber")
     public String icaoNumber;
 

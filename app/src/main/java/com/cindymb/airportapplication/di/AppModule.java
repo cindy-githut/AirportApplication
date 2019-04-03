@@ -22,8 +22,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.cindymb.airportapplication.SSLHelpers.getSSLSocketFactory;
-import static com.cindymb.airportapplication.SSLHelpers.getTrustAllSocketFactory;
+import static com.cindymb.airportapplication.utils.SSLHelpers.getSSLSocketFactory;
+import static com.cindymb.airportapplication.utils.SSLHelpers.getTrustAllSocketFactory;
 
 @Module(includes = ViewModelModule.class)
 public class AppModule {

@@ -16,10 +16,10 @@ import android.text.TextUtils;
 import android.widget.Button;
 
 import com.cindymb.airportapplication.R;
-import com.cindymb.airportapplication.fragment.MapsFragmentDirections;
 import com.cindymb.airportapplication.utils.LoggingHelper;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -29,7 +29,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class BaseFragment extends Fragment {
 
-    private final String TAG = BaseFragment.class.getSimpleName();
+    public final LatLng GAUTENG_COORDINATES = new LatLng(-26.0123951, 27.0061092);
     /**
      * NavController used by all start up screens
      * i.e Splash, Main and Details
@@ -86,9 +86,10 @@ public class BaseFragment extends Fragment {
     public void navigateToNextScreenWithArguments(NavDirections aNavDirections) {
         mNavController.navigate(aNavDirections);
     }
+
     public void displayDialog(String aMessage) {
         if (!isAdded()) return;
-        displayDialog(aMessage, getString(R.string.lbl_ok), null, null, null, true);
+        displayDialog(aMessage, getString(R.string.lbl_ok), null, true);
     }
 
     /**
@@ -97,24 +98,14 @@ public class BaseFragment extends Fragment {
      * @param aMessage         - Message to display
      * @param aPositiveText    - Positive Text eg YES / Okay
      * @param aPositiveOnClick - Positive on click action
-     * @param aNegativeText    - Negative text eg NO / Cancel
-     * @param aNegativeOnClick - Negative on click action
      */
-    public void displayDialog(String aMessage, String aPositiveText, DialogInterface.OnClickListener aPositiveOnClick, String aNegativeText, DialogInterface.OnClickListener aNegativeOnClick, boolean cancellable) {
+    public void displayDialog(String aMessage, String aPositiveText, DialogInterface.OnClickListener aPositiveOnClick, boolean cancellable) {
         if (!isAdded()) return;
         if (TextUtils.isEmpty(aMessage)) {
             aMessage = getString(R.string.lbl_an_error_occured);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom);
         builder.setMessage(aMessage);
-        if (!TextUtils.isEmpty(aNegativeText)) {
-            if (aNegativeOnClick == null) {
-                aNegativeOnClick = (dialog, which) -> {
-                    // Do nothing
-                };
-            }
-            builder.setNegativeButton(aNegativeText, aNegativeOnClick);
-        }
         if (!TextUtils.isEmpty(aPositiveText)) {
             builder.setPositiveButton(aPositiveText, aPositiveOnClick);
         }

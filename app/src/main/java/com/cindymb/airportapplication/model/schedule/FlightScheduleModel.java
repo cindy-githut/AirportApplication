@@ -1,24 +1,43 @@
 package com.cindymb.airportapplication.model.schedule;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class FlightScheduleModel {
 
-    @Expose
+
     @SerializedName("type")
     public String type;
-    @Expose
+
     @SerializedName("status")
     public String status;
 
-    @Expose
     @SerializedName("departure")
     public DepartureModel departureModel;
 
-    @Expose
+    @SerializedName("arrival")
+    public ArrivalModel arrivalModel;
+
     @SerializedName("airline")
     public AirlineModel airlineModel;
+
+    @SerializedName("flight")
+    public FlightModel flightModel;
+
+    public FlightModel getFlightModel() {
+        return flightModel;
+    }
+
+    public void setFlightModel(FlightModel flightModel) {
+        this.flightModel = flightModel;
+    }
+
+    public ArrivalModel getArrivalModel() {
+        return arrivalModel;
+    }
+
+    public void setArrivalModel(ArrivalModel arrival) {
+        this.arrivalModel = arrival;
+    }
 
     public String getType() {
         return type;
