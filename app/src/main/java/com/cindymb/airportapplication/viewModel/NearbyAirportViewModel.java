@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -112,6 +114,16 @@ public class NearbyAirportViewModel extends ViewModel {
                 CameraUpdate zoom = CameraUpdateFactory.zoomTo(11);
                 aGoogleMap.moveCamera(center);
                 aGoogleMap.animateCamera(zoom);
+
+                //makeCircle(mNearbyAirportRequestModel.getLatLng(), 10000, aGoogleMap);
+
+                CircleOptions circleOptions = new CircleOptions()
+                        .radius(500)
+                        .center(bounds.getCenter())
+                        .strokeWidth(2)
+                        .strokeColor(Color.BLUE)
+                        .fillColor(Color.parseColor("#500084d3"));
+                aGoogleMap.addCircle(circleOptions);
 
             } catch (Exception ex) {
                 LoggingHelper.error(NearbyAirportViewModel.class, ex.getMessage());

@@ -3,8 +3,6 @@ package com.cindymb.airportapplication.fragment;
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,7 @@ public class SplashFragment extends BaseFragment {
 
     @Inject
     MyViewModelFactory mFactory;
+    FragmentSplashBinding mFragmentSplashBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,15 +34,8 @@ public class SplashFragment extends BaseFragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentSplashBinding mFragmentSplashBinding = FragmentSplashBinding.inflate(inflater, container, false);
-        mFragmentSplashBinding.splashProgressBar.setProgress(10);
+        mFragmentSplashBinding = FragmentSplashBinding.inflate(inflater, container, false);
 
-        return mFragmentSplashBinding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 navigateToNextScreen();
@@ -53,6 +45,8 @@ public class SplashFragment extends BaseFragment {
         } else {
             navigateToNextScreen();
         }
+
+        return mFragmentSplashBinding.getRoot();
     }
 
     private void navigateToNextScreen() {

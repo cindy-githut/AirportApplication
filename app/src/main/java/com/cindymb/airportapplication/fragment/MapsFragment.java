@@ -156,6 +156,7 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Go
             }
 
             mGoogleMap.setOnMarkerClickListener(this);
+
         } catch (SecurityException sec) {
             displayDialog(sec.getMessage());
         }

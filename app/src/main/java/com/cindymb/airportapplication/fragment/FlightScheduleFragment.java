@@ -77,6 +77,7 @@ public class FlightScheduleFragment extends BaseFragment {
         mRecyclerView.setConfig(new LinearLayoutManager(requireContext()), mFlightScheduleAdapter);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

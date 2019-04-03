@@ -48,6 +48,7 @@ def getVersionPropertiesValue(def varName) {
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+
     defaultConfig {
         applicationId "com.cindymb.airportapplication"
         minSdkVersion 21
@@ -56,19 +57,38 @@ android {
         versionCode Integer.valueOf(getVersionPropertiesValue('VERSION_CODE'))
         versionName Integer.valueOf(getVersionPropertiesValue('VERSION_MAJOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_MINOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_PATCH'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField('String', 'APP_AIRPORT_API_KEY', '"9e90c8-ae1786"')
-//        buildConfigField('String', 'BASE_URL', '"http://aviation-edge.com/v2/public/"')
-        buildConfigField('String', 'BASE_URL', '"https://5ca32815190b430014edbbf9.mockapi.io/"')
 
         manifestPlaceholders = [fabricApiKey    : "34491b12f09ab2dbcaed517b724f3d73a9ecf793",
                                 googleMapsApiKey: "AIzaSyBw3Z9RSmT0M-RZVFuVTasfiCJHzR2Emfg"]
 
     }
+
+    flavorDimensions("default")
+    productFlavors {
+
+        development {
+            buildConfigField('String', 'BASE_URL', '"https://5ca32815190b430014edbbf9.mockapi.io/"')
+            buildConfigField('String', 'NEAR_BY_AIRPORT_URL', '"getall"')
+            buildConfigField('String', 'AIRPORT_TIME_TABLE_URL', '"timetable"')
+
+        }
+        production {
+            buildConfigField('String', 'BASE_URL', '"http://aviation-edge.com/v2/public/"')
+            buildConfigField('String', 'NEAR_BY_AIRPORT_URL', '"nearby?key=9e90c8-ae1786"')
+            buildConfigField('String', 'AIRPORT_TIME_TABLE_URL', '"timetable?key=9e90c8-ae1786"')
+
+        }
+    }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+        }
+
     }
     dataBinding {
         enabled = true
@@ -149,5 +169,5 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
-
+    compile 'com.google.maps.android:android-maps-utils:0.4.4'
 }
