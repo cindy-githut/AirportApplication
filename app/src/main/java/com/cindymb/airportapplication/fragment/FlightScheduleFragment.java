@@ -38,6 +38,7 @@ public class FlightScheduleFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
 
@@ -78,8 +79,12 @@ public class FlightScheduleFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AirportApplication</string>
+    <string name="app_name">Airport Locator</string>
 
     <string name="msg_permission_request">Airport Applications would like to use your devices location to make it easier to get your nearest Airports</string>
     <string name="lbl_an_error_occured">Ooops, An error occurred</string>
