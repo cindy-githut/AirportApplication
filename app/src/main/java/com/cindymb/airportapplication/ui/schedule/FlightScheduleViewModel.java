@@ -35,7 +35,6 @@ public class FlightScheduleViewModel extends ViewModel {
         return mFlightScheduleList;
     }
 
-
     @Override
     protected void onCleared() {
         super.onCleared();

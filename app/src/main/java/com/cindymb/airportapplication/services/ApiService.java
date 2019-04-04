@@ -2,9 +2,6 @@ package com.cindymb.airportapplication.services;
 
 
 import com.cindymb.airportapplication.BuildConfig;
-import com.cindymb.airportapplication.ui.schedule.model.FlightScheduleModel;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,4 +17,8 @@ public interface ApiService {
     @Headers({"Content-Type: application/json"})
     @GET(BuildConfig.AIRPORT_TIME_TABLE_URL)
     Call<Object> getFlightScheduleList(@Query("iataCode") String iataCode, @Query("type") String type);
+
+    @Headers({"Content-Type: application/json"})
+    @GET(BuildConfig.CITIES_URL)
+    Call<Object> getFlightCity(@Query("codeIataCity") String codeIataCity);
 }

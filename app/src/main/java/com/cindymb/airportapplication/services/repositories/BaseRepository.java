@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.ui.MainActivity;
 import com.cindymb.airportapplication.ui.base.BaseResponseModel;
+import com.cindymb.airportapplication.ui.cities.CitiesModel;
 import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel;
 import com.cindymb.airportapplication.ui.schedule.model.FlightScheduleModel;
 import com.google.gson.Gson;
@@ -47,6 +48,17 @@ public class BaseRepository {
         }.getType());
         handleErrorResponse(model);
 
+    }
+
+    List<CitiesModel> handleJSONArrayResponseCity(Response<Object> response, String stringGson) throws JSONException {
+
+        if (response.body() == null) return null;
+        showProgressDialog(false);
+
+        JSONArray jsonArray = new JSONArray(stringGson);
+
+        return new Gson().fromJson(jsonArray.toString(), new TypeToken<List<CitiesModel>>() {
+        }.getType());
     }
 
     List<FlightScheduleModel> handleJSONArrayResponseSchedule(Response<Object> response, String stringGson) throws JSONException {

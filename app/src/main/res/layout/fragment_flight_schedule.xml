@@ -9,9 +9,6 @@
             name="recyclerView"
             type="com.cindymb.airportapplication.ui.utils.RecyclerViewConfig" />
 
-        <variable
-            name="airportModel"
-            type="com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -61,16 +58,17 @@
                     app:layout_collapseMode="parallax">
 
                     <TextView
+                        android:id="@+id/airportCity"
+                        style="@style/FontWhite16Regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
                         android:layout_marginEnd="@dimen/margin_5"
-                        android:text="@{String.format(@string/lbl_airport, airportModel.nameAirport)}" />
+                        android:layout_marginBottom="@dimen/margin_2" />
 
                 </LinearLayout>
 
-
             </android.support.design.widget.CollapsingToolbarLayout>
-
 
         </android.support.design.widget.AppBarLayout>
 

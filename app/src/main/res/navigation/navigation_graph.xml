@@ -38,5 +38,9 @@
             android:name="iataCode"
             app:argType="string" />
 
+        <argument
+            android:name="nearbyAirportModel"
+            app:argType="com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel" />
+
     </fragment>
 </navigation>

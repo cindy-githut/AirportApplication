@@ -16,7 +16,7 @@ import com.cindymb.airportapplication.ui.base.BaseFragment;
 import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel;
 import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.ui.utils.ConnectionEventBus;
-import com.cindymb.airportapplication.ui.utils.Constant;
+import com.cindymb.airportapplication.ui.utils.MyUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -75,6 +75,12 @@ public class NearbyFragment extends BaseFragment implements OnMapReadyCallback, 
 
         if (isConnected(requireActivity())) {
             aFragmentNearbyBinding.mapView.getMapAsync(this);
+
+            if (MyUtils.isFirstTimeLogin) {
+                EventBus.getDefault().postSticky(new ConnectionEventBus.ConnectedEvent(true));
+                MyUtils.isFirstTimeLogin = false;
+            }
+
         } else {
             displayDialog(getString(R.string.msg_connectionError));
         }
@@ -108,7 +114,7 @@ public class NearbyFragment extends BaseFragment implements OnMapReadyCallback, 
         EventBus.getDefault().unregister(this);
     }
 
-    @AfterPermissionGranted(Constant.PERMISSION_CODE)
+    @AfterPermissionGranted(MyUtils.PERMISSION_CODE)
     private void getCurrentLocation() {
         if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
 
@@ -128,7 +134,7 @@ public class NearbyFragment extends BaseFragment implements OnMapReadyCallback, 
                 displayDialog(sec.getMessage());
             }
         } else {
-            EasyPermissions.requestPermissions(requireActivity(), getString(R.string.msg_permission_request), Constant.PERMISSION_CODE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+            EasyPermissions.requestPermissions(requireActivity(), getString(R.string.msg_permission_request), MyUtils.PERMISSION_CODE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
         }
     }
 
@@ -182,8 +188,11 @@ public class NearbyFragment extends BaseFragment implements OnMapReadyCallback, 
             if (marker.getPosition().equals(plotedAirportLatLng)) {
                 if (!TextUtils.isEmpty(aNearbyAirportModel.getCodeIataAirport())) {
 
-                    NearbyFragmentDirections.ActionMapsFragmentToFlightScheduleFragment action = NearbyFragmentDirections.actionMapsFragmentToFlightScheduleFragment(aNearbyAirportModel.getCodeIataAirport());
+                    NearbyFragmentDirections.ActionMapsFragmentToFlightScheduleFragment action =
+                            NearbyFragmentDirections.actionMapsFragmentToFlightScheduleFragment(aNearbyAirportModel.getCodeIataAirport(), aNearbyAirportModel);
+
                     navigateToNextScreenWithArguments(action);
+                    aNearbyAirportModel.setNameAirport(aNearbyAirportModel.nameAirport);
 
                 } else {
 

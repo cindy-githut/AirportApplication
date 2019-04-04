@@ -5,9 +5,10 @@ import android.content.Context;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.cindymb.airportapplication.BuildConfig;
-import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.services.ApiService;
+import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.ui.utils.LoggingHelper;
+import com.cindymb.airportapplication.ui.utils.MyUtils;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -107,6 +108,11 @@ public class AppModule {
     @Provides
     NearbyAirportRequestModel providesNearbyAirportRequestModel() {
         return new NearbyAirportRequestModel();
+    }
+
+    @Provides
+    MyUtils providesUtils() {
+        return new MyUtils();
     }
 
 }

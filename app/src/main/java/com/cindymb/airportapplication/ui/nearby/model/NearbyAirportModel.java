@@ -2,7 +2,9 @@ package com.cindymb.airportapplication.ui.nearby.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class NearbyAirportModel {
+import java.io.Serializable;
+
+public class NearbyAirportModel  implements Serializable {
 
     @SerializedName("nameAirport")
     public String nameAirport;
@@ -42,6 +44,12 @@ public class NearbyAirportModel {
 
     @SerializedName("distance")
     public String distance;
+
+    public void  setNearbyAirportModel(NearbyAirportModel aNearbyAirportModel){
+
+        setNameAirport(aNearbyAirportModel.getNameAirport());
+
+    }
 
 
     public String getNameAirport() {

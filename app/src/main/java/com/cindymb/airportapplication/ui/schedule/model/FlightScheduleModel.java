@@ -22,6 +22,7 @@ public class FlightScheduleModel {
     @SerializedName("flight")
     public FlightModel flightModel;
 
+
     public FlightModel getFlightModel() {
         return flightModel;
     }

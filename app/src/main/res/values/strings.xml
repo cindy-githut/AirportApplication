@@ -13,5 +13,6 @@
     <string name="msg_connectionError">Connection Error, please check your internet connection and try again</string>
     <string name="msg_iata_error">Airport IATA not found</string>
     <string name="msg_google_api_error">Failed to connect to GoogleAPI Services</string>
+    <string name="lbl_departure">departure</string>
 
 </resources>

@@ -70,13 +70,13 @@ android {
             buildConfigField('String', 'BASE_URL', '"https://5ca32815190b430014edbbf9.mockapi.io/"')
             buildConfigField('String', 'NEAR_BY_AIRPORT_URL', '"getall"')
             buildConfigField('String', 'AIRPORT_TIME_TABLE_URL', '"timetable"')
-
+            buildConfigField('String', 'CITIES_URL', '"cities"')
         }
         production {
             buildConfigField('String', 'BASE_URL', '"http://aviation-edge.com/v2/public/"')
             buildConfigField('String', 'NEAR_BY_AIRPORT_URL', '"nearby?key=9e90c8-ae1786"')
             buildConfigField('String', 'AIRPORT_TIME_TABLE_URL', '"timetable?key=9e90c8-ae1786"')
-
+            buildConfigField('String', 'CITIES_URL', '"cityDatabase?key=9e90c8-ae1786"')
         }
     }
     buildTypes {
@@ -169,5 +169,4 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
-    compile 'com.google.maps.android:android-maps-utils:0.4.4'
 }
