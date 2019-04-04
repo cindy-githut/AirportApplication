@@ -1,3 +1,7 @@
+apply plugin: 'com.android.application'
+apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'io.fabric'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -7,13 +11,11 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.28.1'
     }
 }
-apply plugin: 'com.android.application'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'io.fabric'
 
 def getVersionPropertiesValue(def varName) {
     def propertiesFile = file('version.properties')
@@ -46,26 +48,47 @@ def getVersionPropertiesValue(def varName) {
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+
     defaultConfig {
         applicationId "com.cindymb.airportapplication"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         vectorDrawables.useSupportLibrary = true
         versionCode Integer.valueOf(getVersionPropertiesValue('VERSION_CODE'))
         versionName Integer.valueOf(getVersionPropertiesValue('VERSION_MAJOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_MINOR')) + '.' + Integer.valueOf(getVersionPropertiesValue('VERSION_PATCH'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField('String', 'APP_AIRPORT_API_KEY', '"9e90c8-ae1786"')
-        buildConfigField('String', 'BASE_URL', '" https://aviation-edge.com/api/public/"')
 
         manifestPlaceholders = [fabricApiKey    : "34491b12f09ab2dbcaed517b724f3d73a9ecf793",
                                 googleMapsApiKey: "AIzaSyBw3Z9RSmT0M-RZVFuVTasfiCJHzR2Emfg"]
 
     }
+
+    flavorDimensions("default")
+    productFlavors {
+
+        development {
+            buildConfigField('String', 'BASE_URL', '"https://5ca32815190b430014edbbf9.mockapi.io/"')
+            buildConfigField('String', 'NEAR_BY_AIRPORT_URL', '"getall"')
+            buildConfigField('String', 'AIRPORT_TIME_TABLE_URL', '"timetable"')
+            buildConfigField('String', 'CITIES_URL', '"cities"')
+        }
+        production {
+            buildConfigField('String', 'BASE_URL', '"http://aviation-edge.com/v2/public/"')
+            buildConfigField('String', 'NEAR_BY_AIRPORT_URL', '"nearby?key=9e90c8-ae1786"')
+            buildConfigField('String', 'AIRPORT_TIME_TABLE_URL', '"timetable?key=9e90c8-ae1786"')
+            buildConfigField('String', 'CITIES_URL', '"cityDatabase?key=9e90c8-ae1786"')
+        }
+    }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+        }
+
     }
     dataBinding {
         enabled = true
@@ -90,6 +113,7 @@ dependencies {
     def lifecycle_version = "1.1.1"
     def dagger2_version = "2.19"
     def okhttp3_version = "3.9.1"
+    def eventbus_version = "3.1.1"
 
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -100,9 +124,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    //Eventbus
+    implementation "org.greenrobot:eventbus:$eventbus_version"
+
     //navigation components
     implementation "android.arch.navigation:navigation-fragment:$navigation_version"
     implementation "android.arch.navigation:navigation-ui:$navigation_version"
+
     // Crashlytics
     implementation("com.crashlytics.sdk.android:crashlytics:$crashlytics_version@aar") {
         transitive = true
@@ -110,6 +138,7 @@ dependencies {
     //Stetho debug bridge
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
     // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 
@@ -140,5 +169,4 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
-
 }

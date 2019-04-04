@@ -1,6 +1,6 @@
 package com.cindymb.airportapplication.di;
 
-import com.cindymb.airportapplication.application.AirportApplication;
+import com.cindymb.airportapplication.AirportApplication;
 
 import javax.inject.Singleton;
 

@@ -1,11 +1,18 @@
 <resources>
-    <string name="app_name">AirportApplication</string>
+    <string name="app_name">Airport Locator</string>
 
-    <string name="msg_permission_request">Airport Applications would like to use your devices location to make it easier to get your nearest Airports</string>
-    <string name="lbl_an_error_occured">Ooops, An error occurred</string>
+    <!--App labels-->
     <string name="lbl_ok">OK</string>
-    <string name="lbl_map_error">Could not load the map</string>
+    <string name="lbl_airport">Airport</string>
+
+    <!--App messages to display to the user-->
+    <string name="msg_permission_request">Airport Applications would like to use your devices location to make it easier to get your nearest Airports</string>
+    <string name="msg_an_error_occured">Ooops, An error occurred</string>
     <string name="msg_location_error">failed to get your current location, please ensure your location is switched on and try again</string>
-    <string name="lbl_generic_error">Generic Error</string>
-    <string name="lbl_connectionError">Connection Error, please check your internet and try again</string>
+    <string name="msg_generic_error">Generic Error</string>
+    <string name="msg_connectionError">Connection Error, please check your internet connection and try again</string>
+    <string name="msg_iata_error">Airport IATA not found</string>
+    <string name="msg_google_api_error">Failed to connect to GoogleAPI Services</string>
+    <string name="lbl_departure">departure</string>
+
 </resources>
