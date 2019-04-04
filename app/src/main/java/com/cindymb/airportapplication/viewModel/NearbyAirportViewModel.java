@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -14,11 +13,9 @@ import com.cindymb.airportapplication.model.nearby.NearbyAirportModel;
 import com.cindymb.airportapplication.model.nearby.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.services.repositories.NearbyAirportRepository;
 import com.cindymb.airportapplication.utils.LoggingHelper;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -92,7 +89,6 @@ public class NearbyAirportViewModel extends ViewModel {
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 Drawable mapIcon = mApplication.getResources().getDrawable(R.drawable.ic_pin);
                 BitmapDescriptor marker_Icon = getMarkerIconFromDrawable(mapIcon);
-                int padding;
 
                 for (NearbyAirportModel aNearbyAirportModel : airportPlotPointList) {
                     LatLng airportLatLng = new LatLng(Double.parseDouble(aNearbyAirportModel.getLatitudeAirport()), Double.parseDouble(aNearbyAirportModel.getLongitudeAirport()));
@@ -102,33 +98,17 @@ public class NearbyAirportViewModel extends ViewModel {
                     builder.include(airportLatLng);
                     markers.add(aGoogleMap.addMarker(markerOptions));
                 }
-                LatLngBounds bounds = builder.build();
-
-                int width = mApplication.getResources().getDisplayMetrics().widthPixels;
-                padding = (int) (width * 0.20);
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                aGoogleMap.animateCamera(cu);
-
-                // focus on users current location
-                CameraUpdate center = CameraUpdateFactory.newLatLng(mNearbyAirportRequestModel.getLatLng());
-                CameraUpdate zoom = CameraUpdateFactory.zoomTo(11);
-                aGoogleMap.moveCamera(center);
-                aGoogleMap.animateCamera(zoom);
-
-                //makeCircle(mNearbyAirportRequestModel.getLatLng(), 10000, aGoogleMap);
-
-                CircleOptions circleOptions = new CircleOptions()
-                        .radius(500)
-                        .center(bounds.getCenter())
-                        .strokeWidth(2)
-                        .strokeColor(Color.BLUE)
-                        .fillColor(Color.parseColor("#500084d3"));
-                aGoogleMap.addCircle(circleOptions);
-
+                moveCameraToShowMarkers(aGoogleMap, builder.build());
             } catch (Exception ex) {
                 LoggingHelper.error(NearbyAirportViewModel.class, ex.getMessage());
             }
         }
+    }
+
+    private void moveCameraToShowMarkers(GoogleMap map, LatLngBounds bounds) {
+        int width = mApplication.getResources().getDisplayMetrics().widthPixels;
+        int padding = (int) (width * 0.20);
+        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
     }
 
     @Override
