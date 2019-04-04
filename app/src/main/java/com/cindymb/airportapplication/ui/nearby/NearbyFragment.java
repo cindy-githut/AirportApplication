@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cindymb.airportapplication.R;
-import com.cindymb.airportapplication.ui.base.BaseFragment;
-import com.cindymb.airportapplication.databinding.FragmentMapsBinding;
+import com.cindymb.airportapplication.databinding.FragmentNearbyBinding;
 import com.cindymb.airportapplication.di.MyViewModelFactory;
+import com.cindymb.airportapplication.ui.base.BaseFragment;
 import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel;
 import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportRequestModel;
 import com.cindymb.airportapplication.ui.utils.ConnectionEventBus;
@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.greenrobot.eventbus.EventBus;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
@@ -70,16 +69,16 @@ public class NearbyFragment extends BaseFragment implements OnMapReadyCallback, 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        FragmentMapsBinding aFragmentMapsBinding = FragmentMapsBinding.inflate(inflater, container, false);
-        aFragmentMapsBinding.mapView.onCreate(savedInstanceState);
-        aFragmentMapsBinding.mapView.onResume();
+        FragmentNearbyBinding aFragmentNearbyBinding = FragmentNearbyBinding.inflate(inflater, container, false);
+        aFragmentNearbyBinding.mapView.onCreate(savedInstanceState);
+        aFragmentNearbyBinding.mapView.onResume();
 
         if (isConnected(requireActivity())) {
-            aFragmentMapsBinding.mapView.getMapAsync(this);
+            aFragmentNearbyBinding.mapView.getMapAsync(this);
         } else {
             displayDialog(getString(R.string.msg_connectionError));
         }
-        return aFragmentMapsBinding.getRoot();
+        return aFragmentNearbyBinding.getRoot();
     }
 
     @Override
@@ -183,7 +182,7 @@ public class NearbyFragment extends BaseFragment implements OnMapReadyCallback, 
             if (marker.getPosition().equals(plotedAirportLatLng)) {
                 if (!TextUtils.isEmpty(aNearbyAirportModel.getCodeIataAirport())) {
 
-                    NearbyFragmentDirections.ActionMapsFragmentToDepartureFragment action = NearbyFragmentDirections.actionMapsFragmentToDepartureFragment(aNearbyAirportModel.getCodeIataAirport());
+                    NearbyFragmentDirections.ActionMapsFragmentToFlightScheduleFragment action = NearbyFragmentDirections.actionMapsFragmentToFlightScheduleFragment(aNearbyAirportModel.getCodeIataAirport());
                     navigateToNextScreenWithArguments(action);
 
                 } else {

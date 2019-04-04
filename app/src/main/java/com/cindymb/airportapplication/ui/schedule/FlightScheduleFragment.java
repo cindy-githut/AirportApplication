@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cindymb.airportapplication.R;
-import com.cindymb.airportapplication.ui.base.BaseFragment;
-import com.cindymb.airportapplication.databinding.AirplaneDepartureBinding;
+import com.cindymb.airportapplication.databinding.FragmentFlightScheduleBinding;
 import com.cindymb.airportapplication.di.MyViewModelFactory;
+import com.cindymb.airportapplication.ui.base.BaseFragment;
 import com.cindymb.airportapplication.ui.utils.RecyclerViewConfig;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +29,7 @@ public class FlightScheduleFragment extends BaseFragment {
     MyViewModelFactory mFactory;
     FlightScheduleViewModel mFlightScheduleViewModel;
     private FlightScheduleAdapter mFlightScheduleAdapter;
-    private AirplaneDepartureBinding mAirplaneDepartureBinding;
+    private FragmentFlightScheduleBinding mFragmentFlightScheduleBinding;
     private String mIATA;
     private RecyclerViewConfig mRecyclerView = new RecyclerViewConfig();
 
@@ -43,17 +43,17 @@ public class FlightScheduleFragment extends BaseFragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mAirplaneDepartureBinding = AirplaneDepartureBinding.inflate(inflater, container, false);
+        mFragmentFlightScheduleBinding = FragmentFlightScheduleBinding.inflate(inflater, container, false);
         mFlightScheduleAdapter = new FlightScheduleAdapter();
         assert getArguments() != null;
         mIATA = FlightScheduleFragmentArgs.fromBundle(getArguments()).getIataCode();
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(mAirplaneDepartureBinding.toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(mFragmentFlightScheduleBinding.toolbar);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         String itemTitle = "ME ME ME ME ME ME ME ME  ME ME ME MEM E";
-        mAirplaneDepartureBinding.collapsingToolbar.setTitle(itemTitle);
+        mFragmentFlightScheduleBinding.collapsingToolbar.setTitle(itemTitle);
 
-        return mAirplaneDepartureBinding.getRoot();
+        return mFragmentFlightScheduleBinding.getRoot();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class FlightScheduleFragment extends BaseFragment {
             }
         });
 
-        mAirplaneDepartureBinding.setRecyclerView(mRecyclerView);
+        mFragmentFlightScheduleBinding.setRecyclerView(mRecyclerView);
         mRecyclerView.setConfig(new LinearLayoutManager(requireContext()), mFlightScheduleAdapter);
     }
 

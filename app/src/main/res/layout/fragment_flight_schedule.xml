@@ -43,7 +43,7 @@
                     android:layout_height="200dp"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_splash"
+                    android:src="@drawable/img_background"
                     app:layout_collapseMode="parallax" />
 
                 <android.support.v7.widget.Toolbar
