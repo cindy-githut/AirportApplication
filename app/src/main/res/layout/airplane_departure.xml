@@ -7,11 +7,11 @@
 
         <variable
             name="recyclerView"
-            type="com.cindymb.airportapplication.utils.RecyclerViewConfig" />
+            type="com.cindymb.airportapplication.ui.utils.RecyclerViewConfig" />
 
         <variable
             name="airportModel"
-            type="com.cindymb.airportapplication.model.nearby.NearbyAirportModel" />
+            type="com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

@@ -1,18 +1,17 @@
 package com.cindymb.airportapplication.di;
 
 
-import com.cindymb.airportapplication.fragment.FlightScheduleFragment;
-import com.cindymb.airportapplication.fragment.MapsFragment;
-import com.cindymb.airportapplication.fragment.SplashFragment;
+import com.cindymb.airportapplication.ui.SplashFragment;
+import com.cindymb.airportapplication.ui.nearby.NearbyFragment;
+import com.cindymb.airportapplication.ui.schedule.FlightScheduleFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
-
 @Module
 public abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract MapsFragment mapsFragment();
+    abstract NearbyFragment nearbyFragment();
 
     @ContributesAndroidInjector
     abstract SplashFragment splashFragment();

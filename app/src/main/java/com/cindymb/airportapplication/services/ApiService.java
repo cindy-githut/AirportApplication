@@ -2,8 +2,7 @@ package com.cindymb.airportapplication.services;
 
 
 import com.cindymb.airportapplication.BuildConfig;
-import com.cindymb.airportapplication.model.schedule.FlightScheduleModel;
-import com.cindymb.airportapplication.model.nearby.NearbyAirportModel;
+import com.cindymb.airportapplication.ui.schedule.model.FlightScheduleModel;
 
 import java.util.List;
 
@@ -16,9 +15,9 @@ public interface ApiService {
 
     @Headers({"Content-Type: application/json"})
     @GET(BuildConfig.NEAR_BY_AIRPORT_URL)
-    Call<List<NearbyAirportModel>> getNearbyAirportList(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") int distance);
+    Call<Object> getNearbyAirportList(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") int distance);
 
     @Headers({"Content-Type: application/json"})
     @GET(BuildConfig.AIRPORT_TIME_TABLE_URL)
-    Call<List<FlightScheduleModel>> getFlightScheduleList(@Query("iataCode") String iataCode, @Query("type") String type);
+    Call<Object> getFlightScheduleList(@Query("iataCode") String iataCode, @Query("type") String type);
 }

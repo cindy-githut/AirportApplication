@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.cindymb.airportapplication.fragment.SplashFragment"
+        android:name="com.cindymb.airportapplication.ui.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.cindymb.airportapplication.fragment.MapsFragment"
+        android:name="com.cindymb.airportapplication.ui.nearby.NearbyFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/departureFragment"
-        android:name="com.cindymb.airportapplication.fragment.FlightScheduleFragment"
+        android:name="com.cindymb.airportapplication.ui.schedule.FlightScheduleFragment"
         android:label="fragment_departure"
         tools:layout="@layout/fragment_departure" >
 

@@ -2,7 +2,7 @@ package com.cindymb.airportapplication.di;
 
 import android.app.Application;
 
-import com.cindymb.airportapplication.base.BaseRepository;
+import com.cindymb.airportapplication.services.repositories.BaseRepository;
 import com.cindymb.airportapplication.services.ApiService;
 import com.cindymb.airportapplication.services.repositories.FlightScheduleRepository;
 import com.cindymb.airportapplication.services.repositories.NearbyAirportRepository;

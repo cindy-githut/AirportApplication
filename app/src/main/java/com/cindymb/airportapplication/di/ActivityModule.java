@@ -1,7 +1,7 @@
 package com.cindymb.airportapplication.di;
 
-import com.cindymb.airportapplication.MainActivity;
-import com.cindymb.airportapplication.base.BaseActivity;
+import com.cindymb.airportapplication.ui.MainActivity;
+import com.cindymb.airportapplication.ui.base.BaseActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

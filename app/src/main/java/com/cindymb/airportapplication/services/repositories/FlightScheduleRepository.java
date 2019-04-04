@@ -4,9 +4,15 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.text.TextUtils;
 
-import com.cindymb.airportapplication.base.BaseRepository;
-import com.cindymb.airportapplication.model.schedule.FlightScheduleModel;
 import com.cindymb.airportapplication.services.ApiService;
+import com.cindymb.airportapplication.ui.schedule.model.FlightScheduleModel;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.List;
 
@@ -19,14 +25,12 @@ import retrofit2.Response;
 public class FlightScheduleRepository extends BaseRepository {
     private final MutableLiveData<List<FlightScheduleModel>> mMutableLiveData = new MutableLiveData<>();
 
-    private final Application mApplication;
     private final ApiService mApiService;
 
 
     @Inject
     public FlightScheduleRepository(Application application, ApiService apiService) {
         super(application);
-        mApplication = application;
         mApiService = apiService;
     }
 
@@ -35,18 +39,36 @@ public class FlightScheduleRepository extends BaseRepository {
             showProgressDialog(true);
 
             mApiService.getFlightScheduleList(aIATA, "departure")
-                    .enqueue(new Callback<List<FlightScheduleModel>>() {
+                    .enqueue(new Callback<Object>() {
                         @Override
-                        public void onResponse(Call<List<FlightScheduleModel>> call, Response<List<FlightScheduleModel>> response) {
-                            // handleSuccessResponse(response);
-                            showProgressDialog(false);
+                        public void onResponse(@NotNull Call<Object> call, @NotNull Response<Object> response) {
+
                             if (response.body() == null) return;
-                            mMutableLiveData.setValue(response.body());
+
+                            String stringGson = new Gson().toJson(response.body());
+
+                            try {
+                                Object responseObject = new JSONTokener(stringGson).nextValue();
+                                if (responseObject instanceof JSONObject) {
+
+                                    handleJSONObjectResponse(response, stringGson);
+
+                                } else if (responseObject instanceof JSONArray) {
+
+                                    if (handleJSONArrayResponseSchedule(response, stringGson) != null && handleJSONArrayResponseSchedule(response, stringGson).size() > 0) {
+                                        mMutableLiveData.setValue(handleJSONArrayResponseSchedule(response, stringGson));
+                                    }
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
 
                         @Override
-                        public void onFailure(Call<List<FlightScheduleModel>> call, Throwable t) {
-                            handleErrorResponse(t);
+                        public void onFailure(@NotNull Call<Object> call, @NotNull Throwable t) {
+                            handleFailedResponse(t);
                         }
                     });
         }

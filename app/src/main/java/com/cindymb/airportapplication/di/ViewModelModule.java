@@ -3,8 +3,8 @@ package com.cindymb.airportapplication.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.cindymb.airportapplication.viewModel.FlightScheduleViewModel;
-import com.cindymb.airportapplication.viewModel.NearbyAirportViewModel;
+import com.cindymb.airportapplication.ui.schedule.FlightScheduleViewModel;
+import com.cindymb.airportapplication.ui.nearby.NearbyAirportViewModel;
 
 import dagger.Binds;
 import dagger.Module;
