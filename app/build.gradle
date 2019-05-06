@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'io.fabric'
 
+
+//1 cmd rignt click, run as administrator
+//2 programFiles> Java> jre > bin e.g C:\Program Files\Java\jre1.8.0_151\bin
+//3 keytool
+//4 keytool -genkey -v -keystore file.keystore -alias YOUR_ALIAS_NAME -storepass YOUR_ALIAS_PWD -keypass YOUR_ALIAS_PWD -keyalg RSA -validity 36500
+//5
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -64,6 +70,14 @@ android {
 
     }
 
+    signingConfigs {
+        release {
+            storeFile file("release.keystore")
+            storePassword 'YOUR_ALIAS_PWD'
+            keyAlias 'YOUR_ALIAS_NAME'
+            keyPassword 'YOUR_ALIAS_PWD'
+        }
+    }
     flavorDimensions("default")
     productFlavors {
 
@@ -86,6 +100,7 @@ android {
             debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             debuggable true
