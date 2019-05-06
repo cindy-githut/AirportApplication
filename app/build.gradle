@@ -30,7 +30,7 @@ def getVersionPropertiesValue(def varName) {
     def propertyValue = properties[varName]
     if (varName == 'VERSION_CODE' || varName == 'VERSION_PATCH') {
 
-        // If we are building release increment the version code
+        // only If we are building release increment the version code
         List gradleTasksNames = gradle.startParameter.getTaskNames()
         for (String taskName : gradleTasksNames) {
             if (taskName.contains("Release")) {
