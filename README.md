@@ -7,6 +7,7 @@ App that uses the users current location to get the nearest Airports and display
 
 * The application uses the following:
 
+- Aviation-Edge premium Apis full documentation here https://aviation-edge.com/
 - Fabric Crashlytics version:2.9.6 to report crashes.
 - Facebook Stetho version:1.5.0 for debugging i.e only enabled when running in debug mode.
 - Google Maps(version:16.1.0) and FusedLocations (version: 16.1.0)  to get the users current location and plot it on the map.
