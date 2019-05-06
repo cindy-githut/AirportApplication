@@ -1,7 +1,6 @@
 package com.cindymb.airportapplication.ui;
 
 import android.databinding.BindingAdapter;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 
 import com.cindymb.airportapplication.ui.utils.RecyclerViewConfig;

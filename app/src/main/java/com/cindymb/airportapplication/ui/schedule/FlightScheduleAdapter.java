@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.databinding.ItemFlightScheduleBinding;
-import com.cindymb.airportapplication.ui.cities.CitiesViewModel;
 import com.cindymb.airportapplication.ui.schedule.model.FlightScheduleModel;
 import com.cindymb.airportapplication.ui.utils.MyUtils;
 

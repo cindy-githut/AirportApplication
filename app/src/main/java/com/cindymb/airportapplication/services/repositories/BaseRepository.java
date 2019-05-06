@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.cindymb.airportapplication.R;
 import com.cindymb.airportapplication.ui.MainActivity;
+import com.cindymb.airportapplication.ui.base.BaseActivity;
 import com.cindymb.airportapplication.ui.base.BaseResponseModel;
 import com.cindymb.airportapplication.ui.cities.CitiesModel;
 import com.cindymb.airportapplication.ui.nearby.model.NearbyAirportModel;
@@ -35,7 +36,7 @@ public class BaseRepository {
     }
 
     void showProgressDialog(boolean shouldShow) {
-        Intent intent = new Intent(MainActivity.RECEIVER_PROGRESS_DIALOG);
+        Intent intent = new Intent(BaseActivity.RECEIVER_PROGRESS_DIALOG);
         intent.putExtra(MainActivity.INTENT_SHOW_PROGRESS, shouldShow);
         mLocalBroadcastManager.sendBroadcast(intent);
     }
