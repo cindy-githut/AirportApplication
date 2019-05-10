@@ -10,6 +10,7 @@ import com.cindymb.airportapplication.di.DaggerAppComponent;
 import com.cindymb.airportapplication.di.RepositoryModule;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
@@ -43,6 +44,9 @@ public class AirportApplication extends Application implements HasActivityInject
             Fabric.with(this, new Crashlytics());
             Timber.plant(new Timber.DebugTree());
             Stetho.initializeWithDefaults(this);
+
+            if (LeakCanary.isInAnalyzerProcess(this)) return;
+            LeakCanary.install(this);
         }
     }
 

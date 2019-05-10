@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -17,6 +19,7 @@ public class MyViewModelFactory implements ViewModelProvider.Factory {
         this.creators = creators;
     }
 
+    @NotNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         Provider<? extends ViewModel> creator = creators.get(modelClass);
@@ -32,7 +35,9 @@ public class MyViewModelFactory implements ViewModelProvider.Factory {
             throw new IllegalArgumentException("unknown model class: " + modelClass.getSimpleName() + "\n--------Add the " + modelClass.getSimpleName() + " to " + ViewModelModule.class.getSimpleName() + "--------");
         }
         try {
-            return (T) creator.get();
+            @SuppressWarnings("unchecked")
+            T objectT = (T) creator.get();
+            return objectT;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

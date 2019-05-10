@@ -63,14 +63,16 @@ public class AppModule {
 
         try {
             SSLSocketFactory sslSocketFactory = getSSLSocketFactory();
-            if (sslSocketFactory == null) {
-                sslSocketFactory = getTrustAllSocketFactory();
-            }
+
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient.addInterceptor(interceptor);
-            httpClient.sslSocketFactory(sslSocketFactory);
+            if (sslSocketFactory == null && getTrustAllSocketFactory() != null) {
+                sslSocketFactory = getTrustAllSocketFactory();
+                httpClient.sslSocketFactory(sslSocketFactory);
+            }
+
 
             if (BuildConfig.DEBUG) {
                 httpClient.addNetworkInterceptor(new StethoInterceptor());

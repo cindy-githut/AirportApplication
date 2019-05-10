@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'io.fabric'
 
-
+// this is just for me to remember
 //1 cmd rignt click, run as administrator
 //2 programFiles> Java> jre > bin e.g C:\Program Files\Java\jre1.8.0_151\bin
 //3 keytool
@@ -131,6 +131,7 @@ dependencies {
     def dagger2_version = "2.19"
     def okhttp3_version = "3.9.1"
     def eventbus_version = "3.1.1"
+    def leakcanaryVersion = "1.6.3"
 
     //Analyze and InspectCode for cleaning u ypur code and checking possible errors
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -188,4 +189,10 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
+
+    //Leakcanary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanaryVersion"
+
 }

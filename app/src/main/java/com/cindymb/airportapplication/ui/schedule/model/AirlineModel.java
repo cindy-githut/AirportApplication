@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 public class AirlineModel {
 
     @SerializedName("name")
-    public String name;
+    private String name;
 
     @SerializedName("iataCode")
     public String iataCode;
 
     @SerializedName("icaoCode")
-    public String icaoCode;
+    private String icaoCode;
 
     public String getName() {
         return name;

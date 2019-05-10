@@ -15,10 +15,4 @@ public class BaseResponseModel {
         this.error = error;
     }
 
-    @Override
-    public String toString() {
-        return "BaseResponseModel{" +
-                "error=" + error +
-                '}';
-    }
 }
